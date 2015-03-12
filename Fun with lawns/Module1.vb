@@ -1,5 +1,6 @@
 ﻿Module Module1
-
+    Dim textColor As ConsoleColor
+    Dim backGroundColor As ConsoleColor
     Dim companyname As String
     Dim ownername As String
     Dim contactnumber As Integer
@@ -33,11 +34,167 @@
 
 
     Dim BookingID As New List(Of Integer)
+    Sub MakeColor()
+        Console.WriteLine("You have not selected a text color or a background color")
+        Console.WriteLine("")
+        Console.WriteLine("Please select a text color")
+
+        Console.WriteLine("")
+        Console.WriteLine("     (A) Black")
+        Console.WriteLine("     (B) Blue")
+        Console.WriteLine("     (C) Cyan")
+        Console.WriteLine("     (D) Dark Blue")
+        Console.WriteLine("     (E) Dark Cyan")
+        Console.WriteLine("     (F) Yellow")
+        Console.WriteLine("     (G) White")
+        Console.WriteLine("     (H) Red")
+        Console.WriteLine("     (I) Magenta")
+        Console.WriteLine("     (J) Green")
+        Console.WriteLine("     (K) Grey")
+        Console.WriteLine("     (L) Dark yellow")
+        Console.WriteLine("     (M) Dark Red")
+        Console.WriteLine("     (N) Dark Magenta")
+        Console.WriteLine("     (O) Dark Green")
+
+
+        Select Case Console.ReadKey(True).KeyChar.ToString.ToUpper
+            Case "A"
+                textColor = ConsoleColor.Black
+            Case "B"
+                textColor = ConsoleColor.Blue
+            Case "C"
+                textColor = ConsoleColor.Cyan
+            Case "D"
+                textColor = ConsoleColor.DarkBlue
+            Case "E"
+                textColor = ConsoleColor.DarkCyan
+            Case "F"
+                textColor = ConsoleColor.Yellow
+            Case "G"
+                textColor = ConsoleColor.White
+            Case "H"
+                textColor = ConsoleColor.Red
+            Case "I"
+                textColor = ConsoleColor.Magenta
+            Case "J"
+                textColor = ConsoleColor.Green
+            Case "K"
+                textColor = ConsoleColor.Gray
+            Case "L"
+                textColor = ConsoleColor.DarkYellow
+            Case "M"
+                textColor = ConsoleColor.DarkRed
+            Case "N"
+                textColor = ConsoleColor.DarkMagenta
+            Case "O"
+                textColor = ConsoleColor.DarkGreen
+            Case Else
+                Console.WriteLine("Invald Key")
+                Console.WriteLine("")
+                Console.WriteLine("Press any key")
+                Console.WriteLine()
+                Console.ReadKey()
+                MakeColor()
+
+
+        End Select
+        Console.WriteLine("Done!")
+        Console.WriteLine("Press any key")
+        Console.ReadKey()
+
+        Console.Clear()
+
+        Console.WriteLine("You have not selected a background color")
+        Console.WriteLine("")
+        Console.WriteLine("Please select a background color")
+
+        Console.WriteLine("")
+        Console.WriteLine("     (A) Black")
+        Console.WriteLine("     (B) Blue")
+        Console.WriteLine("     (C) Cyan")
+        Console.WriteLine("     (D) Dark Blue")
+        Console.WriteLine("     (E) Dark Cyan")
+        Console.WriteLine("     (F) Yellow")
+        Console.WriteLine("     (G) White")
+        Console.WriteLine("     (H) Red")
+        Console.WriteLine("     (I) Magenta")
+        Console.WriteLine("     (J) Green")
+        Console.WriteLine("     (K) Grey")
+        Console.WriteLine("     (L) Dark yellow")
+        Console.WriteLine("     (M) Dark Red")
+        Console.WriteLine("     (N) Dark Magenta")
+        Console.WriteLine("     (O) Dark Green")
+
+
+        Select Case Console.ReadKey(True).KeyChar.ToString.ToUpper
+            Case "A"
+                backGroundColor = ConsoleColor.Black
+            Case "B"
+                backGroundColor = ConsoleColor.Blue
+            Case "C"
+                backGroundColor = ConsoleColor.Cyan
+            Case "D"
+                backGroundColor = ConsoleColor.DarkBlue
+            Case "E"
+                backGroundColor = ConsoleColor.DarkCyan
+            Case "F"
+                backGroundColor = ConsoleColor.Yellow
+            Case "G"
+                backGroundColor = ConsoleColor.White
+            Case "H"
+                backGroundColor = ConsoleColor.Red
+            Case "I"
+                backGroundColor = ConsoleColor.Magenta
+            Case "J"
+                backGroundColor = ConsoleColor.Green
+            Case "K"
+                backGroundColor = ConsoleColor.Gray
+            Case "L"
+                backGroundColor = ConsoleColor.DarkYellow
+            Case "M"
+                backGroundColor = ConsoleColor.DarkRed
+            Case "N"
+                backGroundColor = ConsoleColor.DarkMagenta
+            Case "O"
+                backGroundColor = ConsoleColor.DarkGreen
+            Case Else
+                Console.WriteLine("Invald Key")
+                Console.WriteLine("")
+                Console.WriteLine("Press any key")
+                Console.WriteLine()
+                Console.ReadKey()
+                MakeColor()
+
+        End Select
+        Console.WriteLine("Done!")
+
+        Console.WriteLine()
+        Console.WriteLine("Press any key to continue...")
+        Console.ReadKey()
+        saveColor()
+
+
+
+    End Sub
+
+    Sub LoadColor()
+        FileOpen(1, "Color.txt", OpenMode.Input)
+        textColor = LineInput(1)
+        backGroundColor = LineInput(1)
+        FileClose(1)
+    End Sub
+
+    Sub saveColor()
+
+        FileOpen(1, "Color.txt", OpenMode.Output)
+        PrintLine(1, textColor)
+        PrintLine(1, backGroundColor)
+        FileClose(1)
+
+    End Sub
 
     Sub Main()
-        Console.ForegroundColor = ConsoleColor.Green
-        Console.BackgroundColor = ConsoleColor.DarkMagenta
-        Console.Clear()
+       
 
 
         '    totalincome = totalincome
@@ -55,7 +212,14 @@
         Console.SetCursorPosition(25, 4)
         Console.WriteLine("Press any key to continue...")
         Console.ReadKey()
-
+        If Not IO.File.Exists("Color.txt") Then
+            MakeColor()
+        Else
+            LoadColor()
+        End If
+        Console.ForegroundColor = textColor
+        Console.BackgroundColor = backGroundColor
+        Console.Clear()
         'cheack if there is a profile and send the user to the right place accourding to this infomation
 
         ' Fixed bug (03/02/2013) Added .txt to fix reading issue
@@ -75,10 +239,10 @@
 
 
         Dim MenuOption As Char
-        Console.ForegroundColor = ConsoleColor.Green
+        'Console.ForegroundColor = ConsoleColor.Green
 
-        Console.BackgroundColor = ConsoleColor.DarkMagenta
-        Console.Clear()
+        'Console.BackgroundColor = ConsoleColor.DarkMagenta
+        'Console.Clear()
 
 
         'If FirstTimeOpen = True Then
@@ -95,8 +259,10 @@
 
         While MenuOption <> "X" Or MenuOption <> "x"
 
+
             'clear the screen
             Console.Clear()
+
 
             'Welcomeing the user
             Console.WriteLine("Welcome " & ownername)
@@ -527,6 +693,7 @@
 
 
         Dim index As Integer = GetBooking()
+
         Select Case Console.ReadLine
             Case ""
                 Console.WriteLine("Canceled!")
@@ -534,7 +701,7 @@
 
                 Console.WriteLine("Press anykey to continue")
                 Console.ReadKey()
-                '      menu()
+
             Case Else
                 Bookings.RemoveAt(index)
 
