@@ -14,7 +14,7 @@
     ' how many bookings there are
     Dim Bookings As New List(Of BookingDetails)
 
-
+    ' coment stuff
     Dim BookingNumber As Integer = 0
 
     Class BookingDetails
