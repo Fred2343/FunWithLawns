@@ -9,6 +9,8 @@
     Dim completedhours As Single
     Dim totalincome As Double
     Dim FirstTimeOpen As Boolean = True
+    Dim normalcolor As Boolean = False
+
     ' Dim BookingId As Integer = 0
 
     ' how many bookings there are
@@ -37,8 +39,12 @@
     Sub MakeColor()
         Console.Clear()
 
-        Console.WriteLine("You have not selected a text color or a background color")
+        Console.WriteLine("You have not selected a text color")
+
         Console.WriteLine("")
+
+        Console.WriteLine()
+
         Console.WriteLine("Please select a text color")
 
         Console.WriteLine("")
@@ -97,10 +103,13 @@
         Console.WriteLine("     Press any key")
         Console.ReadKey()
 
+
+
         Console.Clear()
 
         Console.WriteLine("You have not selected a background color")
         Console.WriteLine("")
+
         Console.WriteLine("Please select a background color")
         Console.WriteLine("")
         Console.WriteLine("     (A) Black             (H) Red")
@@ -143,6 +152,8 @@
                 backGroundColor = ConsoleColor.DarkMagenta
             Case "O"
                 backGroundColor = ConsoleColor.DarkGreen
+
+
             Case Else
                 Console.WriteLine("     Invald Key")
                 Console.WriteLine("")
@@ -159,7 +170,18 @@
         Console.ReadKey()
         saveColor()
 
+        If textColor = backGroundColor Then
+            Console.Clear()
 
+            Console.WriteLine("You have selected the same background color as text color. I have changed the text and background color to the default color's")
+            textColor = ConsoleColor.White
+            backGroundColor = ConsoleColor.Black
+            Console.WriteLine("Press any key to continue...")
+            Console.ReadLine()
+
+        End If
+        Console.BackgroundColor = backGroundColor
+        Console.ForegroundColor = textColor
 
     End Sub
 
@@ -180,14 +202,24 @@
     End Sub
 
     Sub Main()
-        If IO.File.Exists("Color.txt") Then
-            Console.ForegroundColor = textColor
-            Console.BackgroundColor = backGroundColor
-        Else
-            Console.BackgroundColor = ConsoleColor.Black
-            Console.ForegroundColor = ConsoleColor.White
 
+
+        If Not IO.File.Exists("Color.txt") Then
+
+            Console.ForegroundColor = ConsoleColor.White
+            Console.BackgroundColor = ConsoleColor.Black
+            MakeColor()
+        Else
+            LoadColor()
         End If
+
+        Console.ForegroundColor = textColor
+
+        Console.BackgroundColor = backGroundColor
+        Console.Clear()
+
+
+
         '    totalincome = totalincome
 
 
@@ -203,11 +235,7 @@
         Console.SetCursorPosition(25, 4)
         Console.WriteLine("Press any key to continue...")
         Console.ReadKey()
-        If Not IO.File.Exists("Color.txt") Then
-            MakeColor()
-        Else
-            LoadColor()
-        End If
+
         'Console.ForegroundColor = textColor
         'Console.BackgroundColor = backGroundColor
         Console.Clear()
@@ -228,13 +256,13 @@
 
     Sub menu()
 
-        If IO.File.Exists("Color.txt") Then
+        'If IO.File.Exists("Color.txt") Then
 
 
-            Console.ForegroundColor = textColor
-            Console.BackgroundColor = backGroundColor
+        '    Console.ForegroundColor = textColor
+        '    Console.BackgroundColor = backGroundColor
 
-        End If
+        'End If
         Dim MenuOption As Char
         'Console.ForegroundColor = ConsoleColor.Green
 
@@ -256,7 +284,14 @@
 
         While MenuOption <> "X" Or MenuOption <> "x"
 
-
+            'If Not IO.File.Exists("Color.txt") Then
+            '    MakeColor()
+            'Else
+            '    LoadColor()
+            'End If
+            'Console.ForegroundColor = textColor
+            'Console.BackgroundColor = backGroundColor
+            'Console.Clear()
             'clear the screen
             Console.Clear()
 
@@ -323,6 +358,8 @@
                 Case "I"
 
                     BusinessCard()
+                Case "J"
+                    options()
                 Case "X"
                     Close()
             End Select
@@ -596,81 +633,84 @@
 
         Dim index As Integer = GetBooking()
 
+        If index <> "" Then
+            Console.Clear()
 
-        Console.Clear()
+            Console.WriteLine("Booking details:")
 
-        Console.WriteLine("Booking details:")
+            Console.WriteLine("     ")
+            Console.WriteLine("     Name: " & Bookings(index).ClientName)
+            Console.WriteLine("     Address: " & Bookings(index).ClientAddress)
+            Console.WriteLine("     Date: " & Bookings(index).DateOfBooking)
+            Console.WriteLine("     Time: " & Bookings(index).TimeOfBooking)
+            Console.WriteLine()
 
+            Console.Write("Are you sure you want to edit this booking <y/n>: ")
 
+            Select Case Console.ReadKey.KeyChar.ToString.ToUpper
+                Case "Y"
+                    Console.Clear()
+                    Console.WriteLine()
+                    Console.WriteLine()
+                    Console.Write("     Client Name: ")
+                    Try
 
-        Console.WriteLine("     ")
-        Console.WriteLine("     Name: " & Bookings(index).ClientName)
-        Console.WriteLine("     Address: " & Bookings(index).ClientAddress)
-        Console.WriteLine("     Date: " & Bookings(index).DateOfBooking)
-        Console.WriteLine("     Time: " & Bookings(index).TimeOfBooking)
-        Console.WriteLine()
+                        Bookings(index).ClientName = Console.ReadLine
+                    Catch ex As Exception
 
-        Console.Write("Are you sure you want to edit this booking <y/n>: ")
-
-        Select Case Console.ReadKey.KeyChar.ToString.ToUpper
-            Case "Y"
-                Console.Clear()
-                Console.WriteLine()
-                Console.WriteLine()
-                Console.Write("     Client Name: ")
-                Try
-
-                    Bookings(index).ClientName = Console.ReadLine
-                Catch ex As Exception
-
-                End Try
+                    End Try
 
 
-                Console.Write("     Client Address: ")
-                Try
+                    Console.Write("     Client Address: ")
+                    Try
 
-                    Bookings(index).ClientAddress = Console.ReadLine
-                Catch ex As Exception
+                        Bookings(index).ClientAddress = Console.ReadLine
+                    Catch ex As Exception
 
-                End Try
-
-
-                Console.Write("     Date of booking <dd/mm/yyyy>: ")
-                Try
-
-                    Bookings(index).DateOfBooking = Console.ReadLine
-                Catch ex As Exception
-
-                End Try
+                    End Try
 
 
-                Console.Write("     Time of booking <hh:mm am/pm>: ")
-                Try
+                    Console.Write("     Date of booking <dd/mm/yyyy>: ")
+                    Try
 
-                    Bookings(index).TimeOfBooking = Console.ReadLine
-                Catch ex As Exception
+                        Bookings(index).DateOfBooking = Console.ReadLine
+                    Catch ex As Exception
 
-                End Try
-                Console.WriteLine("Done!")
-                Console.WriteLine()
-                Console.WriteLine("Pressany key to continue...")
-                Console.ReadKey()
+                    End Try
 
-                SaveBookings()
 
-            Case "N"
-                Console.Clear()
-                Console.WriteLine("Cancelled ")
-                Console.WriteLine()
-                Console.WriteLine("Press any key to cotinue...")
-                Console.ReadKey()
-            Case Else
-                Console.WriteLine("Invald Key")
-                Console.WriteLine()
-                Console.WriteLine("Press any key to continue")
-                Console.ReadKey()
-        End Select
+                    Console.Write("     Time of booking <hh:mm am/pm>: ")
+                    Try
 
+                        Bookings(index).TimeOfBooking = Console.ReadLine
+                    Catch ex As Exception
+
+                    End Try
+                    Console.WriteLine("Done!")
+                    Console.WriteLine()
+                    Console.WriteLine("Pressany key to continue...")
+                    Console.ReadKey()
+
+                    SaveBookings()
+
+                Case "N"
+                    Console.Clear()
+                    Console.WriteLine("Cancelled ")
+                    Console.WriteLine()
+                    Console.WriteLine("Press any key to cotinue...")
+                    Console.ReadKey()
+                Case Else
+                    Console.WriteLine("Invald Key")
+                    Console.WriteLine()
+                    Console.WriteLine("Press any key to continue")
+                    Console.ReadKey()
+            End Select
+        ElseIf index = "" Then
+            Console.Clear()
+            Console.WriteLine("Canceled")
+            Console.WriteLine("Press any key to continue... ")
+            Console.ReadKey()
+        End If
 
 
     End Sub
@@ -726,7 +766,7 @@
 
         Dim index As Integer = GetBooking()
 
-        If index <> "-1" Then
+        If index <> "" Then
 
 
             Console.Clear()
@@ -795,7 +835,7 @@
                 Console.WriteLine("You have mad $" & hourlyrate * hours)
                 Console.WriteLine()
 
-             
+
 
                 completedhours = completedhours + hours
 
@@ -837,7 +877,7 @@
             End If
 
 
-        ElseIf index = "-1" Then
+        ElseIf index = "" Then
 
         End If
 
@@ -1137,24 +1177,36 @@
     End Sub
 
     Sub options()
-        Console.Clear()
-        Console.WriteLine("Options")
-        Console.WriteLine("")
-        Console.WriteLine(" (A) Change Color Scheme")
+        Dim selection As Char
+        While selection <> "X"
+            Console.Clear()
+
+            Console.WriteLine("Options")
+            Console.WriteLine("")
+            Console.WriteLine(" (A) Change Color Scheme")
+            Console.WriteLine(" (B) Change company infomation")
+
+            Console.SetCursorPosition(0, 22)
+            Console.WriteLine(" (X) Qit")
+
+            selection = Console.ReadKey.KeyChar.ToString.ToUpper()
 
 
 
-        Dim selection As Char = Console.ReadKey.KeyChar.ToString.ToUpper
+            Select Case selection
+                Case "A"
+                    MakeColor()
+                Case "B"
+                    MakeCompanyInfo()
+                Case "X"
 
-        Select Case selection
-            Case "A"
-                MakeColor()
+                Case Else
+                    Console.WriteLine("Invalad Key")
 
 
+            End Select
 
-        End Select
-
-
+        End While
 
 
     End Sub
