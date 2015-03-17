@@ -1,6 +1,8 @@
 ﻿Module Module1
-    Dim textColor As ConsoleColor
-    Dim backGroundColor As ConsoleColor
+    ' this is my big ass list of global variables
+    Dim textColor As ConsoleColor = ConsoleColor.White
+    Dim backGroundColor As ConsoleColor = ConsoleColor.Black
+
     Dim companyname As String
     Dim ownername As String
     Dim contactnumber As Integer
@@ -10,6 +12,9 @@
     Dim totalincome As Double
     Dim FirstTimeOpen As Boolean = True
     Dim normalcolor As Boolean = False
+    Dim CompanyChange As Boolean = False
+    Dim welcomeText As String
+
 
     ' Dim BookingId As Integer = 0
 
@@ -36,6 +41,21 @@
 
 
     Dim BookingID As New List(Of Integer)
+    'Sub MowerPic()
+    '    Console.Clear()
+    '    MowerText = IO.File.ReadAllText("MowerImage.txt")
+
+
+    '    Console.WriteLine(MowerText)
+    '    Console.ReadKey()
+    'End Sub
+    Sub LoadWelcomePic()
+
+        welcomeText = IO.File.ReadAllText("WelcomePic.txt")
+
+
+
+    End Sub
     Sub MakeColor()
         Console.Clear()
 
@@ -202,40 +222,72 @@
     End Sub
 
     Sub Main()
+        LoadWelcomePic()
+
+        Console.ForegroundColor = textColor
+
+
+
+        Console.BackgroundColor = backGroundColor
+        Console.Clear()
+
+    
+
 
 
         If Not IO.File.Exists("Color.txt") Then
+            'welcome user to fun with lawns
+            Console.SetCursorPosition(23, 0)
+
+            Console.WriteLine(welcomeText)
+
+
+            'Console.WriteLine("Welcome to Fun With Lawns v0.1")
+
+
+            'Console.SetCursorPosition(18, 1)
+            'Console.WriteLine("Your all in one lawn management system.")
+
+
+            Console.SetCursorPosition(0, 23)
+            Console.WriteLine("Press any key to continue...")
+            Console.ReadKey()
+
 
             Console.ForegroundColor = ConsoleColor.White
             Console.BackgroundColor = ConsoleColor.Black
+            '  MowerPic()
             MakeColor()
         Else
+
+            'welcome user to fun with lawns
+            Console.SetCursorPosition(23, 0)
+
+            Console.WriteLine(welcomeText)
+
+
+            'Console.WriteLine("Welcome to Fun With Lawns v0.1")
+
+
+            'Console.SetCursorPosition(18, 1)
+            'Console.WriteLine("Your all in one lawn management system.")
+
+
+            Console.SetCursorPosition(0, 23)
+            Console.WriteLine("Press any key to continue...")
+            Console.ReadKey()
+
+
+            Console.ForegroundColor = ConsoleColor.White
+            Console.BackgroundColor = ConsoleColor.Black
             LoadColor()
+
         End If
 
         Console.ForegroundColor = textColor
 
         Console.BackgroundColor = backGroundColor
         Console.Clear()
-
-
-
-        '    totalincome = totalincome
-
-
-        'welcome user to fun with lawns
-        Console.SetCursorPosition(23, 0)
-        Console.WriteLine("Welcome to Fun With Lawns v0.1")
-
-
-        Console.SetCursorPosition(18, 1)
-        Console.WriteLine("Your all in one lawn management system.")
-
-
-        Console.SetCursorPosition(25, 4)
-        Console.WriteLine("Press any key to continue...")
-        Console.ReadKey()
-
         'Console.ForegroundColor = textColor
         'Console.BackgroundColor = backGroundColor
         Console.Clear()
@@ -255,6 +307,9 @@
     End Sub
 
     Sub menu()
+
+
+
 
         'If IO.File.Exists("Color.txt") Then
 
@@ -283,7 +338,17 @@
         'End If
 
         While MenuOption <> "X" Or MenuOption <> "x"
+            Console.Clear()
+            'While True
+            '    Console.ForegroundColor = 
 
+            '    Console.WriteLine("Fun With Lawns")
+
+            '    Console.Clear()
+            'End While
+            Console.WriteLine()
+            Console.WriteLine()
+            Console.WriteLine()
             'If Not IO.File.Exists("Color.txt") Then
             '    MakeColor()
             'Else
@@ -293,7 +358,7 @@
             'Console.BackgroundColor = backGroundColor
             'Console.Clear()
             'clear the screen
-            Console.Clear()
+
 
 
             'Welcomeing the user
@@ -370,13 +435,13 @@
 
     Sub MakeCompanyInfo()
 
-
-        Console.Clear()
-        Console.WriteLine("No company information found. We'll setup a profile befor we begin")
-        Console.WriteLine()
-        Console.WriteLine("Press any key to continue...")
-        Console.ReadKey()
-
+        If CompanyChange = False Then
+            Console.Clear()
+            Console.WriteLine("No company information found. We'll setup a profile befor we begin")
+            Console.WriteLine()
+            Console.WriteLine("Press any key to continue...")
+            Console.ReadKey()
+        End If
         'clear the screen
         Console.Clear()
 
@@ -766,7 +831,7 @@
 
         Dim index As Integer = GetBooking()
 
-        If index <> "" Then
+        If index <> -1 Then
 
 
             Console.Clear()
@@ -877,7 +942,7 @@
             End If
 
 
-        ElseIf index = "" Then
+        ElseIf index = -1 Then
 
         End If
 
@@ -1089,12 +1154,12 @@
 
     Sub saveCompleteHours()
 
-       
+
         FileOpen(1, "CompleteHours.txt", OpenMode.Append)
 
         PrintLine(1, completedhours)
 
-            FileClose(1)
+        FileClose(1)
 
 
 
@@ -1142,11 +1207,11 @@
 
     End Sub
 
-    Function GetBooking()
+    Function GetBooking() As Integer
 
         Dim index As Integer = 0
 
-        Console.Write("Enter the index of the booking <press enter with no text to continue>: ")
+        Console.Write("Enter the index of the booking <type -1 to cancel>: ")
         Try
             index = Console.ReadLine()
         Catch ex As Exception
@@ -1158,7 +1223,7 @@
 
     End Function
 
-    
+
     Sub BookingsFor7days(complete As Boolean)
         Dim timeInSevenDays As Date = Now.AddDays(7)
 
@@ -1197,6 +1262,7 @@
                 Case "A"
                     MakeColor()
                 Case "B"
+                    CompanyChange = True
                     MakeCompanyInfo()
                 Case "X"
 
