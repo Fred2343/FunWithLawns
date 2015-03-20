@@ -14,7 +14,7 @@
     Dim normalcolor As Boolean = False
     Dim CompanyChange As Boolean = False
     Dim welcomeText As String
-
+    Dim Credits As String
 
     ' Dim BookingId As Integer = 0
 
@@ -41,14 +41,13 @@
 
 
     Dim BookingID As New List(Of Integer)
-    'Sub MowerPic()
-    '    Console.Clear()
-    '    MowerText = IO.File.ReadAllText("MowerImage.txt")
-
-
-    '    Console.WriteLine(MowerText)
-    '    Console.ReadKey()
-    'End Sub
+    Sub Credit()
+        Console.Clear()
+        Credits = IO.File.ReadAllText("Credits.txt")
+        Console.WriteLine(Credits)
+        Console.WriteLine("Press any key to continue...")
+        Console.ReadKey()
+    End Sub
     Sub LoadWelcomePic()
 
         welcomeText = IO.File.ReadAllText("WelcomePic.txt")
@@ -309,8 +308,6 @@
     Sub menu()
 
 
-
-
         'If IO.File.Exists("Color.txt") Then
 
 
@@ -339,59 +336,39 @@
 
         While MenuOption <> "X" Or MenuOption <> "x"
             Console.Clear()
-            'While True
-            '    Console.ForegroundColor = 
-
-            '    Console.WriteLine("Fun With Lawns")
-
-            '    Console.Clear()
-            'End While
-            Console.WriteLine()
-            Console.WriteLine()
-            Console.WriteLine()
-            'If Not IO.File.Exists("Color.txt") Then
-            '    MakeColor()
-            'Else
-            '    LoadColor()
-            'End If
-            'Console.ForegroundColor = textColor
-            'Console.BackgroundColor = backGroundColor
-            'Console.Clear()
-            'clear the screen
-
-
-
+         
             'Welcomeing the user
-            Console.WriteLine("Welcome " & ownername)
-            Console.WriteLine("-------------------------------------------------------")
+
+            Dim todaysBookings As BookingDetails
+
 
             'dissplay the current completed hours and the total income
-            Console.WriteLine("Total completed hours: " & completedhours)
-            Console.WriteLine("Total income:         $" & totalincome)
-            Console.WriteLine("-------------------------------------------------------")
-            Console.WriteLine("")
 
+
+            Console.WriteLine("-------------------------------------------------------")
             'display menu options
             Console.WriteLine("Select from one of the following menu options:")
-            Console.WriteLine("")
+            Console.WriteLine("=================================================  =============================")
+            Console.WriteLine("|<A> Add a booking                              |  |" & "Welcome " & ownername)
+            Console.WriteLine("|<B> Veiw all incomplete booking's              |  |                        ")
+            Console.WriteLine("|<C> Veiw all complete bookings                 |  |Total completed hours: " & completedhours)
+            Console.WriteLine("|<D> Cheack incomplete booking's for next 7 days|  |                        ")
+            Console.WriteLine("=================================================  |" & "Total income:   $" & totalincome)
+            Console.WriteLine("|<E> View incomplete booking's details          |  |                        ")
+            Console.WriteLine("|<F> Edit incomplete booking details            |  |                        ")
+            Console.WriteLine("=================================================  |                        ")
+            Console.WriteLine("|<G> Remove a booking                           |  |                        ")
+            Console.WriteLine("|<H> Complete a booking                         |  |                        ")
+            Console.WriteLine("=================================================  |                        ")
+            Console.WriteLine("|<I> View Bussiness card                        |  |                        ")
+            Console.WriteLine("=================================================  |                        ")
+            Console.WriteLine("|<J> Options                                    |  |                        ")
+            Console.WriteLine("|<K> Credits                                    |  |                        ")
+            Console.WriteLine("|<X> Exit                                       |  |                        ")
 
-            Console.WriteLine(" <A> Add a booking")
-            Console.WriteLine(" <B> Veiw all incomplete booking's")
-            Console.WriteLine(" <C> Veiw all complete bookings")
-            Console.WriteLine(" <D> Cheack incomplete booking's for next 7 days")
-            Console.WriteLine("")
-            Console.WriteLine(" <E> View incomplete booking's details")
-            Console.WriteLine(" <F> Edit incomplete booking details")
-            Console.WriteLine("")
-            Console.WriteLine(" <G> Remove a booking")
-            Console.WriteLine(" <H> Complete a booking")
-            Console.WriteLine("")
-            Console.WriteLine(" <I> View Bussiness card")
-            Console.WriteLine("")
+            Console.WriteLine("=================================================  =============================")
 
-            Console.WriteLine(" <J> Options")
-            Console.WriteLine(" <X> Exit")
-
+            Console.WriteLine("This Prgram was recraeted by Nicholas Pasztor and was originally created by MR  Nicholas Dingle.")
             'Get the users choice
             MenuOption = Console.ReadKey.KeyChar.ToString.ToUpper
 
@@ -425,6 +402,8 @@
                     BusinessCard()
                 Case "J"
                     options()
+                Case "K"
+                    Credit()
                 Case "X"
                     Close()
             End Select
@@ -657,7 +636,7 @@
         Dim index As String = GetBooking()
 
 
-        If index <> "" Then
+        If index <> -1 Then
 
 
             Console.Clear()
@@ -679,9 +658,13 @@
 
             Console.WriteLine("Press any key to continue!")
             Console.ReadKey()
+        Else
+            Console.Clear()
+            Console.WriteLine("Canceled")
+            Console.WriteLine()
+            Console.WriteLine("press any key to continue...")
 
-
-
+            Console.ReadKey()
         End If
 
 
@@ -698,7 +681,7 @@
 
         Dim index As Integer = GetBooking()
 
-        If index <> "" Then
+        If index <> -1 Then
             Console.Clear()
 
             Console.WriteLine("Booking details:")
@@ -770,7 +753,7 @@
                     Console.WriteLine("Press any key to continue")
                     Console.ReadKey()
             End Select
-        ElseIf index = "" Then
+        ElseIf index = -1 Then
             Console.Clear()
             Console.WriteLine("Canceled")
             Console.WriteLine("Press any key to continue... ")
@@ -799,7 +782,7 @@
         Dim index As Integer = GetBooking()
 
         Select Case Console.ReadLine
-            Case ""
+            Case -1
                 Console.WriteLine("Canceled!")
                 Console.WriteLine()
 
@@ -1007,6 +990,14 @@
     End Sub
 
     Sub Close()
+        Console.Clear()
+        Console.WriteLine("          Have a lovely day.")
+        Console.WriteLine("")
+
+        Console.WriteLine("          Thanks for using fun with lawns :)")
+        Console.WriteLine("")
+        Console.WriteLine("          Press any key to exit")
+        Console.ReadKey()
         Environment.Exit(0)
 
     End Sub
@@ -1252,7 +1243,7 @@
             Console.WriteLine(" (B) Change company infomation")
 
             Console.SetCursorPosition(0, 22)
-            Console.WriteLine(" (X) Qit")
+            Console.WriteLine(" (X) Quit")
 
             selection = Console.ReadKey.KeyChar.ToString.ToUpper()
 
