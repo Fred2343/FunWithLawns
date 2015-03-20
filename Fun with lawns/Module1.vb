@@ -3,6 +3,9 @@
     Dim textColor As ConsoleColor = ConsoleColor.White
     Dim backGroundColor As ConsoleColor = ConsoleColor.Black
 
+
+
+
     Dim companyname As String
     Dim ownername As String
     Dim contactnumber As Integer
@@ -196,7 +199,7 @@
             textColor = ConsoleColor.White
             backGroundColor = ConsoleColor.Black
             Console.WriteLine("Press any key to continue...")
-            Console.ReadLine()
+            Console.ReadKey()
 
         End If
         Console.BackgroundColor = backGroundColor
@@ -230,7 +233,7 @@
         Console.BackgroundColor = backGroundColor
         Console.Clear()
 
-    
+
 
 
 
@@ -311,8 +314,11 @@
         'If IO.File.Exists("Color.txt") Then
 
 
-        '    Console.ForegroundColor = textColor
-        '    Console.BackgroundColor = backGroundColor
+        If textColor = backGroundColor Then
+            Console.ForegroundColor = ConsoleColor.White
+            Console.BackgroundColor = ConsoleColor.Black
+
+        End If
 
         'End If
         Dim MenuOption As Char
@@ -336,7 +342,7 @@
 
         While MenuOption <> "X" Or MenuOption <> "x"
             Console.Clear()
-         
+
             'Welcomeing the user
 
             Dim todaysBookings As BookingDetails
@@ -1266,6 +1272,10 @@
         End While
 
 
+    End Sub
+
+    Sub song()
+        Console.Beep(37, 1)
     End Sub
 
 End Module
