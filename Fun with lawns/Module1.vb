@@ -1274,8 +1274,6 @@
 
     End Sub
 
-    Sub song()
-        Console.Beep(37, 1)
-    End Sub
+    
 
 End Module
